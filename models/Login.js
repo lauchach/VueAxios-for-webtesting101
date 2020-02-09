@@ -6,15 +6,15 @@ var Login = new Schema({
     username: {
     type: String
   },
-//     email: {
-//     type: String
-//   },
-    Pass: {
+    email: {
+    type: String
+  },
+    Password: {
+    type: String
+  },
+    type: {
     type: String
   }
-//   description: {
-//     type: String
-//   }
 },{
     collection: 'users'
 });

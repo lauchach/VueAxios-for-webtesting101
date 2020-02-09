@@ -13,6 +13,8 @@ mongoose.connect(config.DB);
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+
+
 app.use('/tickets', ticketRoutes);
 app.use('/Login', LoginRoutes);
 
