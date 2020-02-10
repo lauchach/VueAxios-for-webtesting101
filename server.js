@@ -6,10 +6,17 @@ const  mongoose = require('mongoose');
 const  config = require('./config/DB');
 const ticketRoutes = require('./exproutes/ticket.route');
 const LoginRoutes = require('./exproutes/Login.route');
-
+const indexxRoutes = require('./exproutes/indexx.route');
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DB);
-      
+const mongoURI = this.DB
+
+// mongoose.connect(mongoURI, { useNewUrlParser: true })
+//     .then(() => console.log("MongoDB Connected"))
+//     .catch(err => console.log(err))
+
+
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -17,6 +24,8 @@ app.use(cors());
 
 app.use('/tickets', ticketRoutes);
 app.use('/Login', LoginRoutes);
+app.use('/indexx', indexxRoutes);
+
 
 var port = process.env.PORT || 4000;
 

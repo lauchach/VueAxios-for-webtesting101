@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const LoginRoutes = express.Router();
+const  mongoose = require('mongoose');
+// const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcrypt")
 
 const Login = require('../models/Login');
 
@@ -27,5 +30,34 @@ const Login = require('../models/Login');
      }
    });
  });
+
+
+
+
+// LoginRoutes.post("/register", (req, res) => {
+//   const today = new Date()
+//   const userData = {
+//       email: req.body.email,
+//       password: req.body.password
+//       // created: today
+//   }
+// })
+
+// LoginRoutes.post('/login', (req, res) => {
+//   Login.findOne({
+//     email: "tarnapot.b38@gmail.com"
+//   })
+//   .then(LoginRoutes => {
+//     if(this.email === "tarnapot.b38@gmail.com") {
+//       console.log('/login if', this.email)
+//       // if(bcrypt.compareSync(req.body.password, user.password)) {
+//         // const payload = {}
+//       }else{
+//         console.log('/login else',req.body)
+//         res.json({erro: 'User does not exist'})
+//       }
+//   })
+// })
+
  
  module.exports = LoginRoutes;
