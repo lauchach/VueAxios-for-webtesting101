@@ -7,7 +7,9 @@ const  mongoose = require('mongoose');
 
 const Login = require('../models/Login');
 
- LoginRoutes.route('/').get(function (req, res) {
+
+// get  true
+ LoginRoutes.route('/').get(function (req, res) {                      
   console.log('LoginRoutes.route >>>...Login../get')
    Login.find(function (err, Login){
      if(err){
@@ -19,22 +21,24 @@ const Login = require('../models/Login');
    });
  });
 
- LoginRoutes.route('/').post(function (req, res) {
-  console.log('LoginRoutes.route >>>...Login../post')
-   Login.find(function (err, Login){
-     if(err){
-       console.log(err);
-     }
-     else {
-       res.json(Login);
-     }
-   });
- });
+
+
+//  LoginRoutes.route('/').post(function (req, res) {
+//   console.log('LoginRoutes.route >>>...Login../post')
+//    Login.find(function (err, Login){
+//      if(err){
+//        console.log(err);
+//      }
+//      else {
+//        res.json(Login);
+//      }
+//    });
+//  });
 
 
 
 
-// LoginRoutes.post("/register", (req, res) => {
+// LoginRoutes.post("/register", (req, res) => {                     post //true
 //   const today = new Date()
 //   const userData = {
 //       email: req.body.email,
@@ -43,7 +47,8 @@ const Login = require('../models/Login');
 //   }
 // })
 
-// LoginRoutes.post('/login', (req, res) => {
+
+// LoginRoutes.post('/login', (req, res) => {                         test T_T
 //   Login.findOne({
 //     email: "tarnapot.b38@gmail.com"
 //   })
@@ -59,5 +64,72 @@ const Login = require('../models/Login');
 //   })
 // })
 
+LoginRoutes.route("/").post(function(req, res) {
+  var username = req.body.username;
+  var email = req.body.email;
+  var password = req.body.password;
+  var newuser = new User();
+  newuser.username = username;
+  newuser.email = email;
+  newuser.password = password;
+
+  Login.findOne({
+    email: req.body.email
+  })
+    .then(user => {
+      if (!user) {
+        newuser.compare((req.body.password, user.password).then(isMatch => {
+          if (isMatch) {
+                  res.status(200).json({
+                      success: true,
+                      user: user,
+                      msg: "Hurry! You are now logged in."
+                  });
+              
+          } else {
+              return res.status(404).json({
+                  msg: "Incorrect password.",
+                  success: false
+              });
+          }
+        })
+      )}
+    })
+  })
+
+
+// LoginRoutes.post('/', (req, res) => {
+//   Login.findOne({
+//       email: req.body.email
+//     }).then(user => {
+//       if (!user) {
+//           return res.status(404).json({
+//               msg: "Username is not found.",
+//               success: false
+//           });
+//       }then(isMatch => {
+//           if (isMatch) {
+//               // User's password is correct and we need to send the JSON Token for that user
+//               const payload = {
+//                   _id: user._id,
+//                   username: user.username,
+//                   name: user.name,
+//                   email: user.email
+//               }
+//                   res.status(200).json({
+//                       success: true,
+//                       token: `Bearer ${token}`,
+//                       user: user,
+//                       msg: "Hurry! You are now logged in."
+//                   });
+//           } else {
+//               return res.status(404).json({
+//                   msg: "Incorrect password.",
+//                   success: false
+//               });
+//           }
+//       })
+//   });
+// });   
  
  module.exports = LoginRoutes;

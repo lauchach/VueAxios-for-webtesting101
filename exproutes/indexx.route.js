@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const User = require("../models/indexx");
 
+//  V1.2 true
 // indexroutes.route('/').post(function (req, res) {
 //         var username = req.body.username;
 //         var email = req.body.email;
@@ -24,6 +25,8 @@ const User = require("../models/indexx");
 //         })
 //       })
 
+
+//  V2.0 true
 indexroutes.route("/").post(function(req, res) {
   var username = req.body.username;
   var email = req.body.email;
@@ -44,7 +47,7 @@ indexroutes.route("/").post(function(req, res) {
             return res.status(500).send();
           }
           console.log("code", 200, ">>> add+");
-          res.json({ status: newuser.email + " registered" });
+          res.json({ status: 200,success: true, msg: (newuser.email," registered") });
           return res.status(200).send();
         });
       } else {
@@ -56,6 +59,8 @@ indexroutes.route("/").post(function(req, res) {
     });
 });
 
+ 
+//  V1.0 // T_T
 //   var newuser = new User();
 //   newuser.username = username;
 //   newuser.email = email;
@@ -72,6 +77,8 @@ indexroutes.route("/").post(function(req, res) {
 
 // })
 
+
+// test get // true
 indexroutes.route("/").get(function(req, res) {
   console.log("indexroutes.route >>>...Login../get");
   User.find(function(err, Login) {

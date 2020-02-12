@@ -23,7 +23,7 @@ app.use(cors());
 
 
 app.use('/tickets', ticketRoutes);
-app.use('/Login', LoginRoutes);
+app.use('/login', LoginRoutes);
 app.use('/indexx', indexxRoutes);
 
 
