@@ -64,37 +64,78 @@ const Login = require('../models/Login');
 //   })
 // })
 
-LoginRoutes.route("/").post(function(req, res) {
-  var username = req.body.username;
-  var email = req.body.email;
-  var password = req.body.password;
-  var newuser = new User();
-  newuser.username = username;
-  newuser.email = email;
-  newuser.password = password;
+// LoginRoutes.route("/").post(function(req, res) {
+//   var username = req.body.username;
+//   var email = req.body.email;
+//   var password = req.body.password;
+//   var newuser = new User();
+//   newuser.username = username;
+//   newuser.email = email;
+//   newuser.password = password;
 
-  Login.findOne({
-    email: req.body.email
-  })
-    .then(user => {
-      if (!user) {
-        newuser.compare((req.body.password, user.password).then(isMatch => {
-          if (isMatch) {
-                  res.status(200).json({
-                      success: true,
-                      user: user,
-                      msg: "Hurry! You are now logged in."
-                  });
+//   Login.findOne({
+//     email: req.body.email
+//   })
+//     .then(user => {
+//       if (!user) {
+//         newuser.compare((req.body.password, user.password).then(isMatch => {
+//           if (isMatch) {
+//                   res.status(200).json({
+//                       success: true,
+//                       user: user,
+//                       msg: "Hurry! You are now logged in."
+//                   });
               
-          } else {
-              return res.status(404).json({
-                  msg: "Incorrect password.",
-                  success: false
-              });
-          }
+//           } else {
+//               return res.status(404).json({
+//                   msg: "Incorrect password.",
+//                   success: false
+//               });
+//           }
+//         })
+//       )}
+//     })
+//   })
+
+  LoginRoutes.post('/login', (req, res) => {
+    Login.findOne({
+        username: req.body.email
+    }).then(user => {
+        if (!user) {
+          // fake ////////////////////////////////
+            return res.status(202).json({
+                msg: "Email is not found.",
+                success: true
+            });
+        }
+        // If there is user we are now going to compare the password
+        bcrypt.compare(req.body.password, user.password).then(isMatch => {
+            if (isMatch) {
+                // User's password is correct and we need to send the JSON Token for that user
+                const payload = {
+                    _id: user._id,
+                    username: user.username,
+                    name: user.name,
+                    email: user.email
+                }
+                jwt.sign(payload, key, {
+                    expiresIn: 604800
+                }, (err, token) => {
+                    res.status(200).json({
+                        success: true,
+                        token: `Bearer ${token}`,
+                        user: user,
+                        msg: "Hurry! You are now logged in."
+                    });
+                })
+            } else {
+                return res.status(404).json({
+                    msg: "Incorrect password.",
+                    success: false
+                });
+            }
         })
-      )}
-    })
+    });
   })
 
 

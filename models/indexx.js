@@ -3,13 +3,16 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema for Items
 var indexx = new Schema({
-  username: {
+    username: {
     type: String
   },
     email: {
     type: String
   },
     password: {
+    type: String
+  },
+    type: {
     type: String
   }
 },{

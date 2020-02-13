@@ -31,11 +31,21 @@ indexroutes.route("/").post(function(req, res) {
   var username = req.body.username;
   var email = req.body.email;
   var password = req.body.password;
-  var newuser = new User();
-  newuser.username = username;
-  newuser.email = email;
-  newuser.password = password;
+  var type = req.body.type;
 
+  // var newuser = new User();
+  // newuser.username = username;
+  // newuser.email = email;
+  // newuser.password = password;
+  // newuser.type = type;
+
+  let newuser = new User({
+    username,
+    password,
+    email,
+    type
+});
+  
   User.findOne({
     email: req.body.email
   })
