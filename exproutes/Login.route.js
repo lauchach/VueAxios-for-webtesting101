@@ -190,7 +190,8 @@ LoginRoutes.post('/login', (req, res) => {
         return res.status(200).json({
             msg: "Login !!!!",
             success: true,
-            username: user.username
+            username: user.username,
+            type: user.type
         });
       }
     })
