@@ -31,7 +31,7 @@ indexroutes.route("/").post(function(req, res) {
   var username = req.body.username;
   var email = req.body.email;
   var password = req.body.password;
-  var type = req.body.type;
+  var type = 'member';
 
   // var newuser = new User();
   // newuser.username = username;
